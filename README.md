@@ -1,2 +1,2 @@
 # AI
-samый luchshий ИИ
+best ai ever
