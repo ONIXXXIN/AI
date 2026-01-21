@@ -1,19 +1,22 @@
 import arcade
 
 # Размеры окна
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
 SCREEN_TITLE = "My Arcade Game"
-
+WIDTH_CUBE = 80
+HEIGHT_CUBE = 80
+ROW = 10
+COLUMN = 10
+SCREEN_WIDTH = WIDTH_CUBE * COLUMN
+SCREEN_HEIGHT = HEIGHT_CUBE * ROW
 class S1mple(arcade.Sprite):
     def __init__(self):
-        super().__init__("img_1.png",0.45)
+        super().__init__("img_1.png",0.15)
         self.center_x = 380
         self.center_y = 300
 
 class Potujno(arcade.Sprite):
     def __init__(self):
-        super().__init__("img.png", 0.45)
+        super().__init__("img.png", 0.25)
         self.center_x = 380
         self.center_y = 300
 class Game(arcade.Window):
@@ -34,6 +37,9 @@ class Game(arcade.Window):
         arcade.start_render()
         self.Bplant.draw()
         self.Vorobushek.draw()
+        for y in range(10):
+            for x in range(10):
+                arcade.draw_rectangle_outline(50,50,WIDTH_CUBE,HEIGHT_CUBE,arcade.color.TIFFANY_BLUE,2)
 
     def on_update(self, delta_time):
         """Логика игры (60 раз в секунду)"""
@@ -41,7 +47,14 @@ class Game(arcade.Window):
 
     def on_key_press(self, key, modifiers):
         """Нажатие клавиш"""
-        pass
+        if key == arcade.key.D:
+            self.Bplant.center_x += 25
+        if key == arcade.key.A:
+            self.Bplant.center_x -= 25
+        if key == arcade.key.W:
+            self.Bplant.center_y += 25
+        if key == arcade.key.S:
+            self.Bplant.center_y -= 25
 
     def on_key_release(self, key, modifiers):
         """Отпускание клавиш"""
