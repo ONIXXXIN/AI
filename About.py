@@ -1,3 +1,5 @@
+from pprint import pprint
+
 import arcade
 
 # Размеры окна
@@ -19,12 +21,31 @@ class Potujno(arcade.Sprite):
         super().__init__("img.png", 0.25)
         self.center_x = 380
         self.center_y = 300
+    def mouvment(self):
+        for col in range(len(game.x[0])):
+            column = [row[col] for row in game.x]
+
+            if 6 in column:
+                n = column.index(6)
+
+                if n < len(column) - 1:
+                    game.x[n][col] = 0
+                    game.x[n + 1][col] = 6
 class Game(arcade.Window):
     def __init__(self):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
         arcade.set_background_color(arcade.color.BLACK)
         self.Bplant = S1mple()
         self.Vorobushek = Potujno()
+        self.x = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ]
 
 
 
@@ -43,7 +64,8 @@ class Game(arcade.Window):
 
     def on_update(self, delta_time):
         """Логика игры (60 раз в секунду)"""
-        pass
+        self.Vorobushek.mouvment()
+        pprint(self.x)
 
     def on_key_press(self, key, modifiers):
         """Нажатие клавиш"""
@@ -61,11 +83,9 @@ class Game(arcade.Window):
         pass
 
 
-def main():
-    game = Game()
-    game.setup()
-    arcade.run()
+
+game = Game()
+game.setup()
+arcade.run()
 
 
-if __name__ == "__main__":
-    main()
